@@ -21,20 +21,6 @@ require_once(DOKU_PLUGIN.'syntax.php');
 class syntax_plugin_emphasis extends DokuWiki_Syntax_Plugin {
  
     /**
-     * return some info
-     */
-    function getInfo(){
-        return array(
-            'author' => 'Stefan Hechenberger',
-            'email'  => 'foss@stefanix.net',
-            'date'   => '2007-02-09',
-            'name'   => 'Emphasis Plugin',
-            'desc'   => 'Enables different levels of highlighted text',
-            'url'    => 'http://wiki.splitbrain.org/plugin:emphasis',
-        );
-    }
- 
-    /**
      * What kind of syntax are we?
      */
     function getType(){
