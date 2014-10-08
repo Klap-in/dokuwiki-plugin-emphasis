@@ -16,6 +16,8 @@ if(!defined('DOKU_INC')) die();
  * need to inherit from this class
  */
 class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
+    /** @var $odt_style_name */
+    protected $odt_style_name;
 
     /** @var array $colorlist */
     var $colorlist = array(
@@ -140,6 +142,39 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
 
                 case DOKU_LEXER_EXIT:
                     $renderer->doc .= '</span>';
+                    return true;
+            }
+        }
+        if($mode == 'odt') {
+            /** @var renderer_plugin_odt $renderer */
+            switch($state) {
+                case DOKU_LEXER_ENTER:
+                    $this->odt_style_name = NULL;
+                    if ($data['colortype'] == 'color' || $data['colortype'] == 'background-color') {
+                        // Add our style.
+                        $this->odt_style_name = 'plugin_emphasis'.$data['colortype'].$data['color'];
+                        if ( $data['colortype'] == 'color' ) {
+                            $renderer->autostyles[$this->odt_style_name] =
+                            '<style:style style:name="'.$this->odt_style_name.'" style:family="text">
+                                 <style:text-properties fo:color="'.$data['color'].'"/>
+                             </style:style>';
+                        }
+                        if ( $data['colortype'] == 'background-color' ) {
+                            $renderer->autostyles[$this->odt_style_name] =
+                            '<style:style style:name="'.$this->odt_style_name.'" style:family="text">
+                                 <style:text-properties fo:background-color="'.$data['color'].'"/>
+                             </style:style>';
+                        }
+                    }
+
+                    // If $this->odt_style_name == NULL, we do nothing which leads to default text style.
+                    if ( $this->odt_style_name != NULL )
+                        $renderer->doc .= '<text:span text:style-name="'.$this->odt_style_name.'">';
+                    return true;
+
+                case DOKU_LEXER_EXIT:
+                    if ( $this->odt_style_name != NULL )
+                        $renderer->doc .= '</text:span>';
                     return true;
             }
         }
