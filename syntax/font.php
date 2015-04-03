@@ -145,38 +145,19 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
                     return true;
             }
         }
-        if($mode == 'odt') {
+        if($mode == 'odt'){
             /** @var renderer_plugin_odt $renderer */
-            switch($state) {
+            switch ($state) {
                 case DOKU_LEXER_ENTER:
-                    $this->odt_style_name = NULL;
-                    if ($data['colortype'] == 'color' || $data['colortype'] == 'background-color') {
-                        // Add our style.
-                        $this->odt_style_name = 'plugin_emphasis'.$data['colortype'].$data['color'];
-                        if ( $data['colortype'] == 'color' ) {
-                            $renderer->autostyles[$this->odt_style_name] =
-                            '<style:style style:name="'.$this->odt_style_name.'" style:family="text">
-                                 <style:text-properties fo:color="'.$data['color'].'"/>
-                             </style:style>';
-                        }
-                        if ( $data['colortype'] == 'background-color' ) {
-                            $renderer->autostyles[$this->odt_style_name] =
-                            '<style:style style:name="'.$this->odt_style_name.'" style:family="text">
-                                 <style:text-properties fo:background-color="'.$data['color'].'"/>
-                             </style:style>';
-                        }
-                    }
-
-                    // If $this->odt_style_name == NULL, we do nothing which leads to default text style.
-                    if ( $this->odt_style_name != NULL )
-                        $renderer->doc .= '<text:span text:style-name="'.$this->odt_style_name.'">';
-                    return true;
+                    $renderer->_odtSpanOpenUseCSSStyle ($data['colortype'].': '.$data['color'].';font-weight:bold;');
+                    break;
 
                 case DOKU_LEXER_EXIT:
-                    if ( $this->odt_style_name != NULL )
-                        $renderer->doc .= '</text:span>';
-                    return true;
+                    // Close the span.
+                    $renderer->_odtSpanClose();
+                    break;
             }
+            return true;
         }
         return false;
     }
