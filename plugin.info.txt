@@ -1,7 +1,7 @@
  base   emphasis
  author Stefan Hechenberger, Gerrit Uitslag
  email  foss@stefanix.net, klapinklapin@gmail.com
- date   2015-04-03
+ date   2015-04-07
  name   Emphasis Plugin
  desc   Enables different levels of highlighted text
  url    https://www.dokuwiki.org/plugin:emphasis
