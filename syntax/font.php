@@ -75,7 +75,7 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
      * @param Doku_Handler    $handler The handler
      * @return array Data for the renderer
      */
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
         $data['match'] = $match;
 
         switch($state) {
@@ -130,7 +130,7 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
      * @param array          $hdata    The data from the handler function
      * @return bool If rendering was successful.
      */
-    function render($mode, &$renderer, $hdata) {
+    function render($mode, Doku_Renderer $renderer, $hdata) {
         list($state, $data) = $hdata;
 
         if($mode == 'xhtml') {
