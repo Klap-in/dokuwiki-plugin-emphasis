@@ -149,15 +149,18 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
             /** @var renderer_plugin_odt $renderer */
             switch ($state) {
                 case DOKU_LEXER_ENTER:
-                    $renderer->_odtSpanOpenUseCSSStyle ($data['colortype'].': '.$data['color'].';font-weight:bold;');
-                    break;
+                    if (!class_exists('ODTDocument')) {
+                        $renderer->_odtSpanOpenUseCSSStyle ($data['colortype'].': '.$data['color'].';font-weight:bold;');
+                    } else {
+                        $renderer->_odtSpanOpenUseCSS (NULL, 'class="plugin_emphasis" style="'.$data['colortype'].': '.$data['color'].';"');
+                    }
+                    return true;
 
                 case DOKU_LEXER_EXIT:
                     // Close the span.
                     $renderer->_odtSpanClose();
-                    break;
+                    return true;
             }
-            return true;
         }
         return false;
     }
