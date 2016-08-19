@@ -146,7 +146,7 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
             }
         }
         if($mode == 'odt'){
-            /** @var renderer_plugin_odt $renderer */
+            /** @var renderer_plugin_odt_page $renderer */
             switch ($state) {
                 case DOKU_LEXER_ENTER:
                     if (!class_exists('ODTDocument')) {
