@@ -8,9 +8,6 @@
  * @author     Gerrit Uitslag <klapinklapin@gmail.com>
  */
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
@@ -125,15 +122,15 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
     /**
      * Render xhtml output, latex output or metadata
      *
-     * @param string         $mode      Renderer mode (supported modes: xhtml, latex and metadata)
+     * @param string         $format      Renderer mode (supported modes: xhtml, latex and metadata)
      * @param Doku_Renderer  $renderer  The renderer
-     * @param array          $hdata    The data from the handler function
+     * @param array          $data    The data from the handler function
      * @return bool If rendering was successful.
      */
-    function render($mode, Doku_Renderer $renderer, $hdata) {
-        list($state, $data) = $hdata;
+    function render($format, Doku_Renderer $renderer, $data) {
+        list($state, $data) = $data;
 
-        if($mode == 'xhtml') {
+        if($format == 'xhtml') {
             /** @var Doku_Renderer_xhtml $renderer */
             switch($state) {
                 case DOKU_LEXER_ENTER:
@@ -145,7 +142,7 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
                     return true;
             }
         }
-        if($mode == 'odt'){
+        if($format == 'odt'){
             /** @var renderer_plugin_odt_page $renderer */
             switch ($state) {
                 case DOKU_LEXER_ENTER:

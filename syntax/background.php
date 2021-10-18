@@ -1,15 +1,11 @@
 <?php
 /**
  * Emphasis Plugin: Enables text highlighting with
- *                  ::text::, :::text:::, ::::text::::
+ *                  ;;text;;, ;;;text;;;, ;;;;text;;;;
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Gerrit Uitslag <klapinklapin@gmail.com>
  */
-
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-require_once(dirname(__FILE__).'/font.php');
 
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
