@@ -73,14 +73,14 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
      * @param int             $state The state of the handler
      * @param int             $pos The position in the document
      * @param Doku_Handler    $handler The handler
-     * @return array Data for the renderer
+     * @return false|array Data for the renderer
      */
     function handle($match, $state, $pos, Doku_Handler $handler) {
         $data['match'] = $match;
 
         switch($state) {
             case DOKU_LEXER_ENTER:
-                $colortype = ($match{0} == ':' ? 'color':'background-color');
+                $colortype = ($match[0] == ':' ? 'color':'background-color');
 
                 //fill colorlist from config
                 if(empty($this->colorlist[$colortype])) {
@@ -88,7 +88,7 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
                     foreach($colors as $color) {
                         //clean up colorcodes
                         $color = trim($color);
-                        if($color{0} == '#') $color = substr($color, 1);
+                        if($color[0] == '#') $color = substr($color, 1);
                         if(preg_match('/[^A-Fa-f0-9]/', $color)) continue;
                         //length 3 or 6 chars
                         $clen = strlen($color);
