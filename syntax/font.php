@@ -109,7 +109,7 @@ class syntax_plugin_emphasis_font extends DokuWiki_Syntax_Plugin {
 
             case DOKU_LEXER_UNMATCHED:
                 // normal text
-                $handler->_addCall('cdata', array($match), $pos);
+                $handler->addCall('cdata', array($match), $pos);
                 return false;
 
             case DOKU_LEXER_EXIT:
